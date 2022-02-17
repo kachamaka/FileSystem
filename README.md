@@ -17,4 +17,4 @@ exit - exit program
 ## Usage
 Run the .exe file without parameters or with path to already existing file system
 ## Note
-If you want to navigate to root use rootnamepathtofile where you need to change rootname with the name of your root folder.
+If you want to navigate to root use :rootname/path/to/file where you need to change rootname with the name of your root folder.
