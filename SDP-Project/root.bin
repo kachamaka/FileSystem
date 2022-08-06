@@ -1,0 +1,23 @@
+Root:
+root
+Capacity:
+2147483647
+Size:
+17
+ChunkSize:
+512
+LastChunkIndex:
+1
+Hierarchy:
+root/myDir/myFileF
+
+Files:
+root/myDir/myFile:
+Size:
+17
+Checksum:
+1683
+Contents:
+Chunk1:
+some content here
+

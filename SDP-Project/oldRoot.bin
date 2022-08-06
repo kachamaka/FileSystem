@@ -1,0 +1,84 @@
+Root:
+Root
+Capacity:
+524288000
+Size:
+80
+ChunkSize:
+10
+LastChunkIndex:
+35
+Hierarchy:
+Root/file1.txtF
+Root/file2.txtF
+Root/file4.txtF
+Root/folder1/file3.txtF
+Root/folder2D
+Root/folder3/folder4/file1.txtF
+Root/myF
+
+Files:
+Root/file1.txt:
+Size:
+12
+Checksum:
+1153
+Contents:
+Chunk12:
+fk this sh
+Chunk13:
+it
+
+Root/file2.txt:
+Size:
+14
+Checksum:
+1431
+Contents:
+Chunk4:
+something 
+Chunk5:
+else
+
+Root/folder1/file3.txt:
+Size:
+30
+Checksum:
+2834
+Contents:
+Chunk6:
+read this 
+Chunk7:
+one more t
+Chunk8:
+ime please
+
+Root/file4.txt:
+Size:
+20
+Checksum:
+1968
+Contents:
+Chunk9:
+testing so
+Chunk10:
+ this shit
+
+Root/folder3/folder4/file1.txt:
+Size:
+6
+Checksum:
+589
+Contents:
+Chunk11:
+wtf we
+
+Root/my:
+Size:
+14
+Checksum:
+1431
+Contents:
+Chunk33:Chunk4
+Chunk35:Chunk5
+

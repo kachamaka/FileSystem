@@ -1,0 +1,3 @@
+﻿main.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) class VisualLeakDetector g_vld" (__imp_?g_vld@@3VVisualLeakDetector@@A)
+C:\Program Files (x86)\Visual Leak Detector\lib\Win32\vld.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\kachamaka\source\repos\SDP-Project-FileSystemOld\x64\Debug\SDP-Project.exe : fatal error LNK1120: 1 unresolved externals
