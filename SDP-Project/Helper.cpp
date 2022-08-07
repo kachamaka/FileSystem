@@ -3,7 +3,7 @@
 string Helper::pathToString(const vector<string>& path) {
 	if (!path.size()) return "";
 	string strPath;
-	for (size_t i = 0; i < path.size(); i++) {
+	for (size_t i = 0; i < path.size(); ++i) {
 		strPath += path[i] + '/';
 	}
 	strPath.pop_back();
@@ -29,7 +29,7 @@ vector<string> Helper::split(string str, char delim) {
 
 string Helper::toLower(const string& s) {
 	string str = s;
-	for (size_t i = 0; i < str.size(); i++) {
+	for (size_t i = 0; i < str.size(); ++i) {
 		if (str[i] >= 'A' && str[i] <= 'Z') {
 			str[i] = str[i] - 'A' + 'a';
 		}

@@ -96,8 +96,20 @@ public:
 		fs->write(path, file, content);
 	}
 
+	void importFile(const string& src, const vector<string>& dest, const string& file) {
+		fs->importFile(src, dest, file);
+	}
+
 	void writeAppend(const vector<string>& path, const string& file, const string& content) const {
 		fs->writeAppend(path, file, content);
+	}
+
+	void importAppend(const string& src, const vector<string>& dest, const string& file) {
+		fs->importAppend(src, dest, file);
+	} 
+
+	void exportFile(const vector<string>& src, const string& file, const string& dest) {
+		fs->exportFile(src, file, dest);
 	}
 
 	void mkdir(const vector<string>& path, const string& dir) const {

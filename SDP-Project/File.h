@@ -3,10 +3,9 @@
 #include "Chunk.h"
 #include "Helper.h"
 
-#define Helper Helper::Get()
-#define toLower(arg) Helper.toLower(arg)
-#define split(arg) Helper.split(arg)
-#define pathToString(arg) Helper.pathToString(arg)
+#define toLower(arg) Helper::toLower(arg)
+#define split(arg) Helper::split(arg)
+#define pathToString(arg) Helper::pathToString(arg)
 
 static int lastChunkIndex = 0;
 
@@ -74,10 +73,12 @@ public:
 	void setName(const string& name);
 	void setPath(const vector<string>& path);
 	void setChunks(const list<Chunk*>& chunks);
+	void addChunks(const list<Chunk*>& chunks);
 	
 	//get the corresponding node of the file in the tree structure
 	Node* getNode() const;
 	ull getSize() const;
+	string getContent() const;
 	const vector<string>& getPath() const;
 	const list<Chunk*>& getChunks() const;
 

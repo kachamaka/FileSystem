@@ -1,14 +1,14 @@
 #include "File.h"
 
 void File::prepareRM() {
-	for (auto it = chunks.begin(); it != chunks.end(); it++) {
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 		Chunk* chunk = *it;
 		if (!chunk->source) {
 			if (chunk->pointedBy.size()) {
 				Chunk* reference = nullptr;
 
 				list<Chunk*>& pointedBy = chunk->pointedBy;
-				for (auto fIt = pointedBy.begin(); fIt != pointedBy.end(); fIt++) {
+				for (auto fIt = pointedBy.begin(); fIt != pointedBy.end(); ++fIt) {
 					//search for reference outside this file
 					if ((*fIt)->file != this) {
 						reference = *fIt;
@@ -21,7 +21,7 @@ void File::prepareRM() {
 					//deep copy and swap reference and source
 					reference->source = nullptr;
 					reference->content = chunk->content;
-					for (auto pb = pointedBy.begin(); pb != pointedBy.end(); pb++) {
+					for (auto pb = pointedBy.begin(); pb != pointedBy.end(); ++pb) {
 						(*pb)->source = reference;
 						reference->pointedBy.push_back(*pb);
 					}
@@ -38,7 +38,7 @@ void File::prepareRM() {
 /// @brief calculate file checksum and return it
 unsigned long File::calcChecksum() const {
 	unsigned long chksm = '\0';
-	for (auto it = chunks.begin(); it != chunks.end(); it++) {
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 		chksm += (*it)->calcChecksum();
 	}
 	return chksm;
@@ -77,6 +77,13 @@ void File::setChunks(const list<Chunk*>& chunks) {
 	this->chunks = chunks;
 }
 
+void File::addChunks(const list<Chunk*>& chunks) {
+	//this->chunks = chunks;
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
+		this->chunks.push_back(*it);
+	}
+}
+
 const list<Chunk*>& File::getChunks() const {
 	return chunks;
 }
@@ -102,6 +109,14 @@ ull File::getSize() const {
 	return size;
 }
 
+string File::getContent() const {
+	string content;
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
+		content += (*it)->getContent();
+	}
+	return content;
+}
+
 //add chunk to the end of the file
 void File::appendChunk(Chunk* chunk) {
 	chunks.push_back(chunk);
@@ -119,7 +134,7 @@ void File::setChecksum(unsigned long chksm) {
 void File::updateSizeAndChecksum() {
 	unsigned long chksm = '\0';
 	ull s = 0;
-	for (auto it = chunks.begin(); it != chunks.end(); it++) {
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 		Chunk* chunk = *it;
 		chksm += chunk->calcChecksum();
 		s += (chunk->source ? chunk->source->content.size() : chunk->content.size());
@@ -134,9 +149,9 @@ void File::checkChecksum() {
 }
 
 void File::save(std::ofstream& rootFile) const {
-	for (size_t i = 0; i < path.size(); i++) {
+	for (size_t i = 0; i < path.size(); ++i) {
 		string pathSegment = path[i];
-		for (size_t j = 0; j < pathSegment.size(); j++) {
+		for (size_t j = 0; j < pathSegment.size(); ++j) {
 			rootFile << path[i][j];
 		}
 		if (i != path.size() - 1) rootFile << '/';
@@ -147,7 +162,7 @@ void File::save(std::ofstream& rootFile) const {
 	rootFile << "Checksum:" << '\n';
 	rootFile << checksum << "\n";
 	rootFile << "Contents:" << '\n';
-	for (auto it = chunks.begin(); it != chunks.end(); it++) {
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 		Chunk* chunk = *it;
 		chunk->save(rootFile);
 	}
@@ -159,7 +174,7 @@ File* File::cp() {
 	f->size = size;
 	f->checksum = checksum;
 	try {
-		for (auto it = chunks.begin(); it != chunks.end(); it++) {
+		for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 			Chunk* examineChunk = *it;
 			Chunk* cpChunk = new Chunk(("Chunk" + std::to_string(++lastChunkIndex)), "");
 			//creating new chunk and redirecting it to source or to the chunk being examined now
@@ -189,7 +204,7 @@ void File::print() const {
 	std::cout << "Checksum:" << checksum << '\n';
 	std::cout << "Contents:\n";
 
-	for (auto it = chunks.begin(); it != chunks.end(); it++) {
+	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 		(*it)->print();
 	}
 	std::cout << "\n";

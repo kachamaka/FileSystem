@@ -31,5 +31,6 @@ struct Chunk {
 	void save(std::ofstream& rootFile) const;
 	void print() const;
 	size_t size() const;
+	string getContent() const;
 
 };

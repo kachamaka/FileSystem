@@ -13,7 +13,7 @@ void Interpreter::validateInput(const string& line) {
 	if (line.size() == 0) throw invalidCommand;
 
 	bool inQuotes = false;
-	for (size_t i = 0; i < line.size(); i++) {
+	for (size_t i = 0; i < line.size(); ++i) {
 		if (line[i] == '\"') inQuotes = !inQuotes;
 	}
 
@@ -79,7 +79,7 @@ void Interpreter::parse(const string& line) {
 	bool inQuotes = false;
 	bool inWord = false;
 
-	for (size_t i = 0; i < line.size(); i++) {
+	for (size_t i = 0; i < line.size(); ++i) {
 		if (!inWord) {
 			if (line[i] == '\"') {
 				if (!inQuotes) argStart = i + 1;
@@ -208,10 +208,18 @@ void Interpreter::execute(const vector<string>& cmd) {
 		}
 		else if (command == "import") {
 			//without append
-
+			vector<string> path = split(prepareStringPath(cmd[2]));
+			string fName = path[path.size() - 1];
+			path.pop_back();
+			api.importFile(cmd[1], path, fName);
+			std::cout << "File imported successfully!\n";
 		}
 		else if (command == "export") {
-
+			vector<string> path = split(prepareStringPath(cmd[1]));
+			string fName = path[path.size() - 1];
+			path.pop_back();
+			api.exportFile(path, fName, cmd[2]);
+			std::cout << "File exported successfully!\n";
 		}
 		else throw invalidCommand;
 	}
@@ -228,6 +236,11 @@ void Interpreter::execute(const vector<string>& cmd) {
 		}
 		else if (command == "import") {
 			//with append
+			vector<string> path = split(prepareStringPath(cmd[2]));
+			string fName = path[path.size() - 1];
+			path.pop_back();
+			api.importAppend(cmd[1], path, fName);
+			std::cout << "Append import successful!\n";
 		}
 		else throw invalidCommand;
 	}

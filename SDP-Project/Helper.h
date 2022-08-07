@@ -21,28 +21,18 @@ enum Type {
 
 struct Helper {
 
-	Helper() {}
-
-	static Helper& Get() {
-		static Helper hierarchy_instance;
-		return hierarchy_instance;
-	}
-
-	Helper(const Helper&) = delete;
-	Helper& operator=(const Helper&) = delete;
-
 	/// @brief combine path into string
 	/// @param path path to be combined
 	/// @return result
-	string pathToString(const vector<string>& path);
+	static string pathToString(const vector<string>& path);
 
 	/// @brief split string into array of string by the delimiter character
 	/// @param str source string
 	/// @param delim separating symbol
 	/// @return result
-	vector<string> split(string str, char delim = '/');
+	static vector<string> split(string str, char delim = '/');
 
-	string toLower(const string& s);
+	static string toLower(const string& s);
 };
 
 //std::ostream& operator<<(std::ostream& os, const vector<string>& v) {

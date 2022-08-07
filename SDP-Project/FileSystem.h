@@ -35,7 +35,10 @@ public:
 	void rm(const vector<string>& path, const string& file);
 	void cat(const vector<string>& path, const string& file) const;
 	void write(const vector<string>& path, const string& file, const string& content);
+	void importFile(const string& src, const vector<string>& dest, const string& file);
 	void writeAppend(const vector<string>& path, const string& file, const string& content);
+	void importAppend(const string& src, const vector<string>& dest, const string& file);
+	void exportFile(const vector<string>& src, const string& file, const string& dest);
 	void cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName);
 
 };

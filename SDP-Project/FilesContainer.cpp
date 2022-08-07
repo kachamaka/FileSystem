@@ -1,6 +1,5 @@
 #include "FilesContainer.h"
 
-
 FilesContainer::~FilesContainer() {
 	for (auto it = files.begin(); it != files.end();) {
 		delete* it;
@@ -33,16 +32,21 @@ void FilesContainer::link() {
 }
 
 void FilesContainer::calcChecksums() const {
-	for (auto it = files.begin(); it != files.end(); it++) {
+	for (auto it = files.begin(); it != files.end(); ++it) {
 		(*it)->setChecksum();
+	}
+}
+
+void FilesContainer::updateFiles() const {
+	for (auto it = files.begin(); it != files.end(); ++it) {
+		(*it)->updateSizeAndChecksum();
 	}
 }
 
 void FilesContainer::save(std::ofstream& rootFile) const {
 	rootFile << "Files:\n";
-	for (auto it = files.begin(); it != files.end(); it++) {
+	for (auto it = files.begin(); it != files.end(); ++it) {
 		File* file = *it;
-		file->updateSizeAndChecksum();
 		file->save(rootFile);
 	}
 }
@@ -51,7 +55,7 @@ void FilesContainer::rm(const vector<string>& path, const string& fileName, ull&
 	File* f = Hierarchy::Get().getFile(path, fileName);
 	if (!f) throw std::exception("Couldn't find file");
 	ull s = f->getSize();
-	for (auto it = files.begin(); it != files.end(); it++) {
+	for (auto it = files.begin(); it != files.end(); ++it) {
 		if (*it == f) {
 			files.erase(it);
 			break;
@@ -153,6 +157,20 @@ void FilesContainer::write(const vector<string>& path, const string& fileName, c
 	size += contentSize;
 }
 
+void FilesContainer::importFile(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) {
+	std::ifstream input(src);
+	if (!input) throw std::exception("No such source file...");
+
+	File* dest = Hierarchy::Get().getFile(dir, file);
+	if (dest) throw std::exception("Destination file already exists...");
+
+	string content;
+	string line;
+	while (std::getline(input, line)) content += line;
+
+	write(dir, file, content, chunkSize, size);
+}
+
 void FilesContainer::writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) const {
 	File* f = Hierarchy::Get().getFile(path, fileName);
 	if (!f) throw std::exception("No such file found...");
@@ -161,13 +179,13 @@ void FilesContainer::writeAppend(const vector<string>& path, const string& fileN
 	//delete last chunk if needed and align content
 	if (f->getChunks().back()->size() < chunkSize) {
 		Chunk* last = f->getChunks().back();
-		appendContent += last->content;
+		appendContent += last->getContent();
 		f->removeLastChunk();
 		delete last;
 	}
 	appendContent += content;
 
-	if (chunkSize >= content.size()) {
+	if (chunkSize >= appendContent.size()) {
 		Chunk* chunk = new Chunk(("Chunk" + std::to_string(++lastChunkIndex)), "");
 		Chunk* source = findOtherChunk(chunk, appendContent);
 		if (source) {
@@ -177,13 +195,13 @@ void FilesContainer::writeAppend(const vector<string>& path, const string& fileN
 		else chunk->content = appendContent;
 
 		chunk->file = f;
-		//f->deleteFileContents();
 		f->appendChunk(chunk);
 	}
 	else {
 		size_t lastIndex = 0;
 		list<Chunk*> chunks;
 		try {
+
 			//size_t i = chunkSize;
 			for (size_t i = chunkSize; i < appendContent.size(); i += chunkSize) {
 				string chunkContent = appendContent.substr(lastIndex, i - lastIndex);
@@ -219,13 +237,42 @@ void FilesContainer::writeAppend(const vector<string>& path, const string& fileN
 			throw;
 		}
 
-		f->deleteFileContents();
-		f->setChunks(chunks);
+		//f->deleteFileContents();
+		f->addChunks(chunks);
 
 	}
 	f->updateSizeAndChecksum();
 	size += content.size();
 }
+
+void FilesContainer::importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) const {
+	std::ifstream input(src);
+	if (!input) throw std::exception("No such source file...");
+
+	File* dest = Hierarchy::Get().getFile(dir, file);
+	if (!dest) throw std::exception("No such destination file found...");
+
+	string content;
+	string line;
+	while (std::getline(input, line)) content += line;
+
+	writeAppend(dir, file, content, chunkSize, size);
+}
+
+void FilesContainer::exportFile(const vector<string>& src, const string& file, const string& dest) {
+	File* f = Hierarchy::Get().getFile(src, file);
+	if (!f) throw std::exception("No such file found...");
+
+	std::ifstream destFile(dest);
+	if (destFile) throw std::exception("File with such name already exists...");
+	destFile.close();
+
+	std::ofstream output(dest);
+	if (!output) throw std::exception("Couldn't create file with such name...");
+	
+	output << f->getContent();
+}
+
 
 void FilesContainer::cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName, ull& size) {
 	File* src = Hierarchy::Get().getFile(srcPath, srcName);
@@ -260,7 +307,7 @@ void FilesContainer::cp(const vector<string>& srcPath, const string& srcName, co
 }
 
 void FilesContainer::print(const string& fPath) const {
-	for (auto it = files.begin(); it != files.end(); it++) {
+	for (auto it = files.begin(); it != files.end(); ++it) {
 		if (pathToString((*it)->getPath()) == fPath) {
 			(*it)->print();
 		}
@@ -269,9 +316,9 @@ void FilesContainer::print(const string& fPath) const {
 }
 
 Chunk* FilesContainer::findChunk(const string& name) const {
-	for (auto f = files.begin(); f != files.end(); f++) {
+	for (auto f = files.begin(); f != files.end(); ++f) {
 		const list<Chunk*>& chunks = (*f)->getChunks();
-		for (auto ch = chunks.begin(); ch != chunks.end(); ch++) {
+		for (auto ch = chunks.begin(); ch != chunks.end(); ++ch) {
 			if ((*ch)->name == name) return *ch;
 		}
 	}
@@ -279,9 +326,9 @@ Chunk* FilesContainer::findChunk(const string& name) const {
 }
 
 Chunk* FilesContainer::findOtherChunk(Chunk* current, const string& content) const {
-	for (auto f = files.begin(); f != files.end(); f++) {
+	for (auto f = files.begin(); f != files.end(); ++f) {
 		const list<Chunk*>& chunks = (*f)->getChunks();
-		for (auto ch = chunks.begin(); ch != chunks.end(); ch++) {
+		for (auto ch = chunks.begin(); ch != chunks.end(); ++ch) {
 			//find chunk other than current that has same contents in order to link one to the other
 			if ((*ch)->content == content && current != *ch) return *ch;
 		}

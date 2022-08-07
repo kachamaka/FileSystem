@@ -31,6 +31,8 @@ public:
 	/// @brief calculate anew all files checksums
 	void calcChecksums() const;
 
+	void updateFiles() const;
+
 	/// @brief save all files onto file through stream
 	/// @param rootFile stream to file
 	void save(std::ofstream& rootFile) const;
@@ -53,6 +55,8 @@ public:
 	/// @param chunkSize max chunk size
 	/// @param size size to be updated after operation
 	void write(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size);
+	
+	void importFile(const string& src, const vector<string>& dest, const string& file, const int chunkSize, ull& size);
 
 	/// @brief append content to end of file
 	/// @param path file directory
@@ -61,6 +65,10 @@ public:
 	/// @param chunkSize max chunk size
 	/// @param size size to be updated after operation
 	void writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) const;
+
+	void importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) const;
+
+	void exportFile(const vector<string>& src, const string& file, const string& dest);
 
 	/// @brief copy file onto another path
 	/// @param srcPath source file directory

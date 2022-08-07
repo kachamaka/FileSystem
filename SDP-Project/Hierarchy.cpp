@@ -4,7 +4,7 @@ void Hierarchy::clearHierarchy(Node* n) {
 	if (!n) return;
 
 	list<Node*>& children = n->children;
-	for (auto it = children.begin(); it != children.end(); it++) {
+	for (auto it = children.begin(); it != children.end(); ++it) {
 		clearHierarchy(*it);
 	}
 
@@ -17,7 +17,7 @@ Node* Hierarchy::applyPathToNode(Node* node, const string& path) {
 	if (path == "..") return node->parent;
 	else {
 		const list<Node*>& children = node->children;
-		for (auto it = children.begin(); it != children.end(); it++) {
+		for (auto it = children.begin(); it != children.end(); ++it) {
 			if (toLower((*it)->name) == toLower(path)) return *it;
 		}
 	}
@@ -28,8 +28,8 @@ Node* Hierarchy::findNode(const vector<string>& path, const Type& type) {
 	if (path.size() < 2) throw std::exception("Invalid path in findNode");
 	Node* n = root;
 	size_t i = 0;
-	if (path[0] == root->name) i++;
-	for (i; i < path.size(); i++) n = applyPathToNode(n, path[i]);
+	if (path[0] == root->name) ++i;
+	for (i; i < path.size(); ++i) n = applyPathToNode(n, path[i]);
 
 	return n;
 }
@@ -39,7 +39,7 @@ void Hierarchy::fixDepth(Node* current, int depth) {
 	if (depth > maxDepth) maxDepth = depth;
 	if (!current->children.size()) return;
 	list<Node*>& children = current->children;
-	for (auto it = children.begin(); it != children.end(); it++) {
+	for (auto it = children.begin(); it != children.end(); ++it) {
 		fixDepth(*it, depth + 1);
 	}
 }
@@ -84,7 +84,7 @@ void Hierarchy::addHierarchy(const string& rootName, vector<vector<string>>& pat
 			else {
 				const list<Node*>& children = current->children;
 				bool found = false;
-				for (auto ch = children.begin(); ch != children.end(); ch++) {
+				for (auto ch = children.begin(); ch != children.end(); ++ch) {
 					Node* node = *ch;
 
 					if (node->name == name) {
@@ -113,7 +113,7 @@ string Hierarchy::getCurrentDirectory() {
 
 	vector<string> dirPath;
 	constructFolderPath(currentDirectory, dirPath);
-	for (size_t i = 0; i < dirPath.size(); i++) {
+	for (size_t i = 0; i < dirPath.size(); ++i) {
 		dir += dirPath[i];
 		if (i != dirPath.size() - 1) dir += '/';
 	}
@@ -128,15 +128,12 @@ Node* Hierarchy::goToDir(const vector<string>& path) {
 	if (!path.size()) return currentDirectory;
 	Node* dir = currentDirectory;
 	size_t i = 0;
-	for (int i = 0; i < path.size(); ++i) {
-		std::cout << path[i] << " ";
-	}
-	std::cout << "\n";
+
 	if (toLower(path[0]) == ":" + toLower(root->name)) {
 		dir = root;
-		i++;
+		++i;
 	}
-	for (i; i < path.size(); i++) {
+	for (i; i < path.size(); ++i) {
 		dir = applyPathToNode(dir, path[i]);
 		if (!dir) return nullptr;
 	}
@@ -180,7 +177,7 @@ void Hierarchy::rmdir(const vector<string>& path, const string& rmDir) {
 	if (!dir) throw std::exception("Invalid path in rmdir");
 
 	list<Node*>& children = dir->children;
-	for (auto it = children.begin(); it != children.end(); it++) {
+	for (auto it = children.begin(); it != children.end(); ++it) {
 		Node* rmNode = *it;
 		if (rmNode->name == rmDir && rmNode->type == Type::directory) {
 			if (!rmNode->children.size()) {
@@ -199,7 +196,7 @@ void Hierarchy::ls(const vector<string>& path) {
 
 	if (!dir->children.size()) throw std::exception("Directory is empty...");
 	const list<Node*>& children = dir->children;
-	for (auto it = children.begin(); it != children.end(); it++) {
+	for (auto it = children.begin(); it != children.end(); ++it) {
 		Node* n = *it;
 		std::cout << n->name;
 		if (n->type == Type::directory) std::cout << "/";
@@ -219,7 +216,7 @@ File* Hierarchy::getFile(const vector<string>& path, const string& fileName) {
 	string fName = toLower(fileName);
 
 	list<Node*>& children = dir->children;
-	for (auto it = children.begin(); it != children.end(); it++) {
+	for (auto it = children.begin(); it != children.end(); ++it) {
 		Node* node = *it;
 		//std::cout << toLower(node->name) << " " << fName << "\n";
 		if (toLower(node->name) == fName && node->type == Type::file) {
@@ -268,7 +265,7 @@ void Hierarchy::getLeaves(Node* current, vector<vector<string>>& paths) const {
 	}
 	else {
 		const list<Node*>& children = current->children;
-		for (auto it = children.begin(); it != children.end(); it++) {
+		for (auto it = children.begin(); it != children.end(); ++it) {
 			getLeaves(*it, paths);
 		}
 	}
@@ -281,8 +278,8 @@ string Hierarchy::print() const {
 	vector<vector<string>> paths;
 	getLeaves(root, paths);
 
-	for (size_t i = 0; i < paths.size(); i++) {
-		for (size_t j = 0; j < paths[i].size(); j++) {
+	for (size_t i = 0; i < paths.size(); ++i) {
+		for (size_t j = 0; j < paths[i].size(); ++j) {
 			str += paths[i][j] + '/';
 		}
 		str.pop_back();

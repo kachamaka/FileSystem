@@ -9,7 +9,7 @@ Chunk::~Chunk() {
 	if (source) {
 		//deleting reference is no problem
 		list<Chunk*>& srcPointedBy = source->pointedBy;
-		for (auto it = srcPointedBy.begin(); it != srcPointedBy.end(); it++) {
+		for (auto it = srcPointedBy.begin(); it != srcPointedBy.end(); ++it) {
 			if (*it == this) {
 				srcPointedBy.erase(it);
 				break;
@@ -20,7 +20,7 @@ Chunk::~Chunk() {
 		if (pointedBy.size()) {
 			//deleting source requires to change source if possible
 			Chunk* reference = nullptr;
-			for (auto fIt = pointedBy.begin(); fIt != pointedBy.end(); fIt++) {
+			for (auto fIt = pointedBy.begin(); fIt != pointedBy.end(); ++fIt) {
 				//search for reference outside current file
 				if ((*fIt)->file != this->file) {
 					reference = *fIt;
@@ -32,7 +32,7 @@ Chunk::~Chunk() {
 				//deep copy and swap reference and source
 				reference->source = nullptr;
 				reference->content = content;
-				for (auto pb = pointedBy.begin(); pb != pointedBy.end(); pb++) {
+				for (auto pb = pointedBy.begin(); pb != pointedBy.end(); ++pb) {
 					(*pb)->source = reference;
 					reference->pointedBy.push_back(*pb);
 				}
@@ -44,7 +44,7 @@ Chunk::~Chunk() {
 				reference = pointedBy.front();
 				reference->source = nullptr;
 				reference->content = content;
-				for (auto pb = pointedBy.begin(); pb != pointedBy.end(); pb++) {
+				for (auto pb = pointedBy.begin(); pb != pointedBy.end(); ++pb) {
 					(*pb)->source = reference;
 					reference->pointedBy.push_back(*pb);
 				}
@@ -56,7 +56,7 @@ Chunk::~Chunk() {
 
 unsigned long Chunk::calcStringChecksum(const string& content) {
 	unsigned long checksum = 0;
-	for (size_t i = 0; i < content.size(); i++) checksum += content[i];
+	for (size_t i = 0; i < content.size(); ++i) checksum += content[i];
 	return checksum;
 }
 
@@ -78,4 +78,8 @@ size_t Chunk::size() const {
 void Chunk::print() const {
 	if (source) source->print();
 	else cout << content;
+}
+
+string Chunk::getContent() const {
+	return (source ? source->content : content);
 }

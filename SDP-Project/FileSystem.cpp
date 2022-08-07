@@ -87,6 +87,9 @@ FileSystem::FileSystem(
 void FileSystem::save() const {
 	std::ofstream outfile(rootFile);
 	if (!outfile) throw std::exception("Couldn't find file...");
+
+	filesContainer.updateFiles();
+
 	//save all info onto file
 	outfile << "Root:\n";
 	outfile << root.c_str() << '\n';
@@ -132,8 +135,20 @@ void FileSystem::write(const vector<string>& path, const string& file, const str
 	filesContainer.write(path, file, content, chunkSize, size);
 }
 
+void FileSystem::importFile(const string& src, const vector<string>& dest, const string& file) {
+	filesContainer.importFile(src, dest, file, chunkSize, size);
+}
+
 void FileSystem::writeAppend(const vector<string>& path, const string& file, const string& content) {
 	filesContainer.writeAppend(path, file, content, chunkSize, size);
+}
+
+void FileSystem::importAppend(const string& src, const vector<string>& dest, const string& file) {
+	filesContainer.importAppend(src, dest, file, chunkSize, size);
+}
+
+void FileSystem::exportFile(const vector<string>& src, const string& file, const string& dest) {
+	filesContainer.exportFile(src, file, dest);
 }
 
 void FileSystem::cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName) {
