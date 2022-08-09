@@ -25,7 +25,7 @@ Node* Hierarchy::applyPathToNode(Node* node, const string& path) {
 }
 
 Node* Hierarchy::findNode(const vector<string>& path, const Type& type) {
-	if (path.size() < 2) throw std::exception("Invalid path in findNode");
+	if (path.size() < 2) throw invalidFindNodePath;
 	Node* n = root;
 	size_t i = 0;
 	if (path[0] == root->name) ++i;
@@ -62,7 +62,7 @@ void Hierarchy::addHierarchy(const string& rootName, vector<vector<string>>& pat
 
 	for (size_t i = 0; i < paths.size(); ++i) {
 
-		if (paths[i].size() < 2) throw std::exception("Invalid path in addHierarchy");
+		if (paths[i].size() < 2) throw invalidHierarchyPath;
 		Node* current = root;
 
 		const vector<string>& path = paths[i];
@@ -144,7 +144,7 @@ Node* Hierarchy::goToDir(const vector<string>& path) {
 
 Node* Hierarchy::mkfile(const vector<string>& path, const string& fileName) {
 	Node* dir = goToDir(path);
-	if (!dir) throw std::exception("Invalid path in cd");
+	if (!dir) throw invalidCDPath;
 
 	Node* newFile = new Node(fileName, Type::file, dir->depth + 1, dir);
 	newFile->parent = dir;
@@ -157,13 +157,13 @@ Node* Hierarchy::mkfile(const vector<string>& path, const string& fileName) {
 
 void Hierarchy::cd(const vector<string>& path) {
 	Node* dir = goToDir(path);
-	if (!dir) throw std::exception("Invalid path in cd");
+	if (!dir) throw invalidCDPath;
 	currentDirectory = dir;
 }
 
 void Hierarchy::mkdir(const vector<string>& path, const string& mkDir) {
 	Node* dir = goToDir(path);
-	if (!dir) throw std::exception("Invalid path in mkdir");
+	if (!dir) throw invalidMkDirPath;
 
 	Node* newDir = new Node(mkDir, Type::directory, dir->depth + 1, dir);
 	vector<string> p = dir->path;
@@ -174,7 +174,7 @@ void Hierarchy::mkdir(const vector<string>& path, const string& mkDir) {
 
 void Hierarchy::rmdir(const vector<string>& path, const string& rmDir) {
 	Node* dir = goToDir(path);
-	if (!dir) throw std::exception("Invalid path in rmdir");
+	if (!dir) throw invalidRmDirPath;
 
 	list<Node*>& children = dir->children;
 	for (auto it = children.begin(); it != children.end(); ++it) {
@@ -185,16 +185,16 @@ void Hierarchy::rmdir(const vector<string>& path, const string& rmDir) {
 				delete rmNode;
 				break;
 			}
-			else throw std::exception("Folder not empty");
+			else throw folderNotEmpty;
 		}
 	}
 }
 
 void Hierarchy::ls(const vector<string>& path) {
 	Node* dir = goToDir(path);
-	if (!dir) throw std::exception("Invalid path in ls");
+	if (!dir) throw invalidLSPath;
 
-	if (!dir->children.size()) throw std::exception("Directory is empty...");
+	if (!dir->children.size()) throw emptyDirectory;
 	const list<Node*>& children = dir->children;
 	for (auto it = children.begin(); it != children.end(); ++it) {
 		Node* n = *it;
@@ -206,13 +206,13 @@ void Hierarchy::ls(const vector<string>& path) {
 
 Node* Hierarchy::getNode(const vector<string>& path) {
 	Node* node = goToDir(path);
-	if (!node) throw std::exception("Invalid path in getNode");
+	if (!node) throw invalidGetNodePath;
 	return node;
 }
 
 File* Hierarchy::getFile(const vector<string>& path, const string& fileName) {
 	Node* dir = goToDir(path);
-	if (!dir) throw std::exception("Invalid path in getFile");
+	if (!dir) throw invalidGetFilePath;
 	string fName = toLower(fileName);
 
 	list<Node*>& children = dir->children;
@@ -228,7 +228,7 @@ File* Hierarchy::getFile(const vector<string>& path, const string& fileName) {
 
 void Hierarchy::linkNodeFilePointers(const vector<string>& path, File* file) {
 	Node* n = findNode(path, Type::file);
-	if (!n) throw std::exception("Invalid path in linking node-file pointers");
+	if (!n) throw invalidLinkNodesPath;
 
 	n->file = file;
 	file->setNode(n);

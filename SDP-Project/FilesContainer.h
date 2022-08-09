@@ -3,6 +3,9 @@
 #include "File.h"
 #include "Hierarchy.h"
 
+#define fileNotFound \
+std::exception("Couldn't find file");
+
 /// @brief structure for containing all files
 class FilesContainer {
 	list<File*> files;
@@ -56,6 +59,12 @@ public:
 	/// @param size size to be updated after operation
 	void write(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size);
 	
+	/// @brief import file from windows file system into current
+	/// @param src path to file in windows file system
+	/// @param dest path to folder in current file system
+	/// @param file file name of target destination
+	/// @param chunkSize max chunk size
+	/// @param size size to be updated after successful import
 	void importFile(const string& src, const vector<string>& dest, const string& file, const int chunkSize, ull& size);
 
 	/// @brief append content to end of file
@@ -66,8 +75,18 @@ public:
 	/// @param size size to be updated after operation
 	void writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) const;
 
+	/// @brief import file from windows file system while appending it to existing destination file
+	/// @param src path to file in windows file system
+	/// @param dir path to folder in current file system
+	/// @param file file name of target destination
+	/// @param chunkSize max chunk size
+	/// @param size size to be updated after successful import with append
 	void importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) const;
 
+	/// @brief export file from current file system into windows file system for example
+	/// @param src path to directory in current file system
+	/// @param file file name of src file
+	/// @param dest path to file to export src file to
 	void exportFile(const vector<string>& src, const string& file, const string& dest);
 
 	/// @brief copy file onto another path

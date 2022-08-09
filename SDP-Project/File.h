@@ -72,13 +72,23 @@ public:
 	void setChecksum(unsigned long chksm);
 	void setName(const string& name);
 	void setPath(const vector<string>& path);
+	
+	/// @brief set chunks with new list of chunks
+	/// @param chunks 
 	void setChunks(const list<Chunk*>& chunks);
+
+	/// @brief append these chunks to already existing ones
+	/// @param chunks 
 	void addChunks(const list<Chunk*>& chunks);
 	
 	//get the corresponding node of the file in the tree structure
 	Node* getNode() const;
 	ull getSize() const;
+
+	/// @brief get file contents
+	/// @return file contents
 	string getContent() const;
+
 	const vector<string>& getPath() const;
 	const list<Chunk*>& getChunks() const;
 

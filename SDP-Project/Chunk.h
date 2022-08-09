@@ -25,12 +25,21 @@ struct Chunk {
 	Chunk(const string& name, const string& content, Chunk* source = nullptr);
 	~Chunk();
 
+	/// @brief calculate checksum of content
+	/// @param content input
+	/// @return checksum
 	static unsigned long calcStringChecksum(const string& content);
 
+	/// @brief calculate checksum of chunk
+	/// @return checksum
 	unsigned long calcChecksum() const;
+
 	void save(std::ofstream& rootFile) const;
 	void print() const;
 	size_t size() const;
+
+	/// @brief get chunk content
+	/// @return chunk content
 	string getContent() const;
 
 };

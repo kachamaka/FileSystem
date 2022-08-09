@@ -53,7 +53,7 @@ void FilesContainer::save(std::ofstream& rootFile) const {
 
 void FilesContainer::rm(const vector<string>& path, const string& fileName, ull& size) {
 	File* f = Hierarchy::Get().getFile(path, fileName);
-	if (!f) throw std::exception("Couldn't find file");
+	if (!f) throw fileNotFound;
 	ull s = f->getSize();
 	for (auto it = files.begin(); it != files.end(); ++it) {
 		if (*it == f) {
@@ -71,7 +71,7 @@ void FilesContainer::rm(const vector<string>& path, const string& fileName, ull&
 
 void FilesContainer::cat(const vector<string>& path, const string& fileName) const {
 	File* f = Hierarchy::Get().getFile(path, fileName);
-	if (!f) throw std::exception("Couldn't find file...");
+	if (!f) throw fileNotFound;
 	f->checkChecksum();
 
 	f->print();
@@ -153,7 +153,7 @@ void FilesContainer::write(const vector<string>& path, const string& fileName, c
 	}
 	f->updateSizeAndChecksum();
 	if (size >= fSize) size -= fSize;
-	else throw std::exception("Invalid remove file operation...");
+	else throw std::exception("Invalid file operation...");
 	size += contentSize;
 }
 
@@ -173,7 +173,7 @@ void FilesContainer::importFile(const string& src, const vector<string>& dir, co
 
 void FilesContainer::writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) const {
 	File* f = Hierarchy::Get().getFile(path, fileName);
-	if (!f) throw std::exception("No such file found...");
+	if (!f) throw fileNotFound;
 
 	string appendContent;
 	//delete last chunk if needed and align content
@@ -237,7 +237,6 @@ void FilesContainer::writeAppend(const vector<string>& path, const string& fileN
 			throw;
 		}
 
-		//f->deleteFileContents();
 		f->addChunks(chunks);
 
 	}
@@ -264,7 +263,7 @@ void FilesContainer::exportFile(const vector<string>& src, const string& file, c
 	if (!f) throw std::exception("No such file found...");
 
 	std::ifstream destFile(dest);
-	if (destFile) throw std::exception("File with such name already exists...");
+	if (destFile) throw std::exception("File with such destination name already exists...");
 	destFile.close();
 
 	std::ofstream output(dest);

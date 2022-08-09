@@ -3,6 +3,9 @@
 #include "Hierarchy.h"
 #include "FilesContainer.h"
 
+#define notEnoughSpace \
+std::exception("Not enough space...");
+
 /// @brief structure storing all file system info + files
 class FileSystem {
 	string rootFile = "";

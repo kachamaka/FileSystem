@@ -32,6 +32,9 @@ struct Helper {
 	/// @return result
 	static vector<string> split(string str, char delim = '/');
 
+	/// @brief convert string to lower characters only and return it
+	/// @param s source string
+	/// @return new string with all lower characters
 	static string toLower(const string& s);
 };
 

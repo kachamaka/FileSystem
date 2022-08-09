@@ -1,7 +1,7 @@
 #include "FileSystem.h"
 
 void FileSystem::capacityCheck(const string& content) {
-	if (size + content.size() > capacity) throw std::exception("Not enough space...");
+	if (size + content.size() > capacity) throw notEnoughSpace;
 }
 
 FileSystem::FileSystem(string fileName, string rootDir, ull cap, ull size, int chSize, int lastChIndex)
@@ -86,7 +86,7 @@ FileSystem::FileSystem(
 
 void FileSystem::save() const {
 	std::ofstream outfile(rootFile);
-	if (!outfile) throw std::exception("Couldn't find file...");
+	if (!outfile) throw fileNotFound;
 
 	filesContainer.updateFiles();
 

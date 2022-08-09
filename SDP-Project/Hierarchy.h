@@ -1,6 +1,44 @@
 #pragma once
 
 #include "File.h"
+#include <format>
+
+
+#define invalidHierarchyPath \
+std::exception("Invalid path in hierarchy");
+
+#define invalidCDPath \
+std::exception("Invalid path in cd");
+
+#define invalidMkDirPath \
+std::exception("Invalid path in mkdir");
+
+#define invalidRmDirPath \
+std::exception("Invalid path in rmdir");
+
+#define folderNotEmpty \
+std::exception("Folder not empty");
+
+#define invalidLSPath \
+std::exception("Invalid path in ls");
+
+#define invalidGetNodePath \
+std::exception("Invalid path in getNode");
+
+#define invalidFindNodePath \
+std::exception("Invalid path in findNode");
+
+#define emptyDirectory \
+std::exception("Directory is empty...");
+
+#define invalidGetFilePath \
+std::exception("Invalid path in getFile");
+
+#define invalidLinkNodesPath \
+std::exception("Invalid path in linking node-file pointers");
+
+
+
 
 /// @brief class for organising file system relations - directories and files
 class Hierarchy {

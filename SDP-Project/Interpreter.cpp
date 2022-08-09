@@ -35,19 +35,19 @@ void Interpreter::clearConsole() const {
 }
 
 void Interpreter::printCommands() const {
-	std::cout << "mkdir <path> - create directory\n";
-	std::cout << "rmdir <path> - delete empty directory\n";
-	std::cout << "ls <path> - list directory contents\n";
-	std::cout << "save - save all data\n";
-	std::cout << "cd <path> - change current directory\n";
-	std::cout << "cp <src> <dest> - copy file\n";
-	std::cout << "rm <path> - remove file\n";
-	std::cout << "cat <path> - output file contents\n";
-	std::cout << "write <path> <content> <+append?> - write content to file / overwrite if exists / append if <+append> is present\n";
-	std::cout << "import <src> <dest> <+append?> - import file from outer file system to current / append if <+append> is present\n";
-	std::cout << "export <src> <dest> - export file from this file system to outer\n";
-	std::cout << "cls - clear console\n";
-	std::cout << "exit - exit program\n";
+	cout << "mkdir <path> - create directory\n";
+	cout << "rmdir <path> - delete empty directory\n";
+	cout << "ls <path> - list directory contents\n";
+	cout << "save - save all data\n";
+	cout << "cd <path> - change current directory\n";
+	cout << "cp <src> <dest> - copy file\n";
+	cout << "rm <path> - remove file\n";
+	cout << "cat <path> - output file contents\n";
+	cout << "write <path> <content> <+append?> - write content to file / overwrite if exists / append if <+append> is present\n";
+	cout << "import <src> <dest> <+append?> - import file from outer file system to current / append if <+append> is present\n";
+	cout << "export <src> <dest> - export file from this file system to outer\n";
+	cout << "cls - clear console\n";
+	cout << "exit - exit program\n";
 }
 
 void Interpreter::start() {
@@ -63,7 +63,7 @@ void Interpreter::start() {
 			parse(line);
 		}
 		catch (const std::exception& e) {
-			std::cout << e.what() << std::endl;
+			cout << e.what() << std::endl;
 		}
 	}
 }
@@ -142,7 +142,10 @@ void Interpreter::execute(const vector<string>& cmd) {
 	}
 	else if (cmd.size() == 1) {
 		if (command == "ls") api.ls();
-		else if (command == "save") api.save();
+		else if (command == "save") {
+			api.save();
+			cout << "File system save successfully!\n";
+		}
 		else throw invalidCommand;
 	}
 	else if (cmd.size() == 2) {
@@ -152,14 +155,14 @@ void Interpreter::execute(const vector<string>& cmd) {
 			string dir = path[path.size() - 1];
 			path.pop_back();
 			api.mkdir(path, dir);
-			std::cout << "Directory created successfully!\n";
+			cout << "Directory created successfully!\n";
 		}
 		else if (command == "rmdir") {
 			vector<string> path = split(prepareStringPath(cmd[1]));
 			string dir = path[path.size() - 1];
 			path.pop_back();
 			api.rmdir(path, dir);
-			std::cout << "Directory deleted successfully!\n";
+			cout << "Directory deleted successfully!\n";
 		}
 		else if (command == "ls") {
 			vector<string> path = split(prepareStringPath(cmd[1]));
@@ -174,7 +177,7 @@ void Interpreter::execute(const vector<string>& cmd) {
 			string fName = path[path.size() - 1];
 			path.pop_back();
 			api.rm(path, fName);
-			std::cout << "File removed successfully!\n";
+			cout << "File removed successfully!\n";
 		}
 		else if (command == "cat") {
 			vector<string> path = split(prepareStringPath(cmd[1]));
@@ -196,7 +199,7 @@ void Interpreter::execute(const vector<string>& cmd) {
 			destPath.pop_back();
 
 			api.cp(srcPath, srcName, destPath, destName);
-			std::cout << "File copied successfully!\n";
+			cout << "File copied successfully!\n";
 		}
 		else if (command == "write") {
 			//without append
@@ -204,7 +207,7 @@ void Interpreter::execute(const vector<string>& cmd) {
 			string fName = path[path.size() - 1];
 			path.pop_back();
 			api.write(path, fName, cmd[2]);
-			std::cout << "File written successfully!\n";
+			cout << "File written successfully!\n";
 		}
 		else if (command == "import") {
 			//without append
@@ -212,14 +215,14 @@ void Interpreter::execute(const vector<string>& cmd) {
 			string fName = path[path.size() - 1];
 			path.pop_back();
 			api.importFile(cmd[1], path, fName);
-			std::cout << "File imported successfully!\n";
+			cout << "File imported successfully!\n";
 		}
 		else if (command == "export") {
 			vector<string> path = split(prepareStringPath(cmd[1]));
 			string fName = path[path.size() - 1];
 			path.pop_back();
 			api.exportFile(path, fName, cmd[2]);
-			std::cout << "File exported successfully!\n";
+			cout << "File exported successfully!\n";
 		}
 		else throw invalidCommand;
 	}
@@ -232,7 +235,7 @@ void Interpreter::execute(const vector<string>& cmd) {
 			string fName = path[path.size() - 1];
 			path.pop_back();
 			api.writeAppend(path, fName, cmd[2]);
-			std::cout << "Append successful!\n";
+			cout << "File append successful!\n";
 		}
 		else if (command == "import") {
 			//with append
@@ -240,7 +243,7 @@ void Interpreter::execute(const vector<string>& cmd) {
 			string fName = path[path.size() - 1];
 			path.pop_back();
 			api.importAppend(cmd[1], path, fName);
-			std::cout << "Append import successful!\n";
+			cout << "Import append successful!\n";
 		}
 		else throw invalidCommand;
 	}
