@@ -35,16 +35,36 @@ void FilesContainer::link() {
 	}
 }
 
-void FilesContainer::calcChecksums() const {
+void FilesContainer::integrityCheck(ull& size) const {
+	ull newSize = 0;
 	for (auto it = files.begin(); it != files.end(); ++it) {
-		(*it)->setChecksum();
+		File* f = (*it);
+		try {
+			f->checkChecksum();
+		}
+		catch (...) {
+			vector<string> v = f->getPath();
+			cout << "File: ";
+			for (int i = 0; i < v.size() - 1; ++i) {
+				cout << v[i] << "/";
+			}
+			cout << v[v.size() - 1] << " may be corrupted...\n";
+			//throw;
+		}
+		f->updateSizeAndChecksum();
+		newSize += f->getSize();
 	}
+	size = newSize;
 }
 
-void FilesContainer::updateFiles() const {
+void FilesContainer::updateFiles(ull& size) {
+	ull newSize = 0;
 	for (auto it = files.begin(); it != files.end(); ++it) {
-		(*it)->updateSizeAndChecksum();
+		File* f = (*it);
+		f->updateSizeAndChecksum();
+		newSize += f->getSize();
 	}
+	size = newSize;
 }
 
 void FilesContainer::save(std::ofstream& rootFile) const {
@@ -211,8 +231,6 @@ void FilesContainer::writeAppend(const vector<string>& path, const string& fileN
 		size_t lastIndex = 0;
 		list<Chunk*> chunks;
 		try {
-
-			//size_t i = chunkSize;
 			for (size_t i = chunkSize; i < appendContent.size(); i += chunkSize) {
 				string chunkContent = appendContent.substr(lastIndex, i - lastIndex);
 				Chunk* chunk = new Chunk(("Chunk" + std::to_string(++lastChunkIndex)), "");

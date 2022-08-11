@@ -36,8 +36,6 @@ Chunk::~Chunk() {
 					(*pb)->source = reference;
 					reference->pointedBy.push_back(*pb);
 				}
-				//source = reference;
-				//reference->pointedBy.push_back(chunk);
 			}
 			else {
 				//if no reference get first element

@@ -17,7 +17,6 @@ vector<string> Helper::split(string str, char delim) {
 		if (index != string::npos) {
 			result.push_back(str.substr(0, index));
 			str = str.substr(index + 1);
-			//if (str.size() == 0) result.push_back(str);
 		}
 		else {
 			result.push_back(str);

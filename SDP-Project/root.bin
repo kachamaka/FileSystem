@@ -3,21 +3,48 @@ root
 Capacity:
 2147483647
 Size:
-17
+118
 ChunkSize:
-512
+20
 LastChunkIndex:
-1
+11
 Hierarchy:
-root/myDir/myFileF
+root/dir1/file1F
+root/file2F
+root/file3F
 
 Files:
-root/myDir/myFile:
+root/dir1/file1:
 Size:
-17
+54
 Checksum:
-1683
+5182
 Contents:
-Chunk1:
-some content here
+Chunk4:
+some text for my fil
+Chunk5:
+e to test how write 
+Chunk6:
+function works
+
+root/file2:
+Size:
+42
+Checksum:
+4005
+Contents:
+Chunk7:Chunk4
+Chunk8:
+e but change somethi
+Chunk9:
+ng
+
+root/file3:
+Size:
+22
+Checksum:
+2116
+Contents:
+Chunk10:Chunk8
+Chunk11:Chunk9
 

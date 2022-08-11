@@ -123,7 +123,7 @@ public:
 	/// @brief update file size and checksum
 	void updateSizeAndChecksum();
 
-	/// @brief check is file checksum is correct
+	/// @brief check if file checksum is correct
 	void checkChecksum();
 
 	/// @brief save file info through the stream

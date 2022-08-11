@@ -166,7 +166,7 @@ void Hierarchy::mkdir(const vector<string>& path, const string& mkDir) {
 	if (!dir) throw invalidMkDirPath;
 
 	for (auto d = dir->children.begin(); d != dir->children.end(); ++d) {
-		if ((*d)->name == mkDir) throw std::exception("Directory already exists...");
+		if ((*d)->name == mkDir && (*d)->type == Type::directory) throw std::exception("Directory already exists...");
 	}
 
 	Node* newDir = new Node(mkDir, Type::directory, dir->depth + 1, dir);

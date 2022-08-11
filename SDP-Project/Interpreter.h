@@ -33,6 +33,5 @@ class Interpreter {
 	static string prepareStringPath(const string& path);
 public:
 
-	Interpreter();
 	Interpreter(const string& fileName);
 };

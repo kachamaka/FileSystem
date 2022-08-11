@@ -131,7 +131,7 @@ void File::updateSizeAndChecksum() {
 
 void File::checkChecksum() {
 	unsigned long chksm = calcChecksum();
-	if (chksm != checksum) throw std::exception("Corrupted file...");
+	if (chksm != checksum) throw std::exception("Corrupted file(s)...\n");
 }
 
 void File::save(std::ofstream& rootFile) const {
@@ -184,11 +184,6 @@ File* File::cp(ull& lastChunkIndex) {
 }
 
 void File::print() const {
-	std::cout << "Path:" << pathToString(path) << '\n';
-	std::cout << "Size:" << size << '\n';
-	std::cout << "Checksum:" << checksum << '\n';
-	std::cout << "Contents:\n";
-
 	for (auto it = chunks.begin(); it != chunks.end(); ++it) {
 		(*it)->print();
 	}

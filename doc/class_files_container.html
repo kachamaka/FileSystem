@@ -86,14 +86,13 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>link</b> ()</td></tr>
 <tr class="memdesc:a9aecc97f4454c4271eaaa2fe57734a39"><td class="mdescLeft">&#160;</td><td class="mdescRight">link all chunks to the corresponding source chunk <br /></td></tr>
 <tr class="separator:a9aecc97f4454c4271eaaa2fe57734a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcade1f2796f6cf13bbcb61f89c0bda8"><td class="memItemLeft" align="right" valign="top"><a id="abcade1f2796f6cf13bbcb61f89c0bda8" name="abcade1f2796f6cf13bbcb61f89c0bda8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>calcChecksums</b> () const</td></tr>
-<tr class="memdesc:abcade1f2796f6cf13bbcb61f89c0bda8"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate anew all files checksums <br /></td></tr>
-<tr class="separator:abcade1f2796f6cf13bbcb61f89c0bda8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42ce4b68a39d745104396b3ea48d80d8"><td class="memItemLeft" align="right" valign="top"><a id="a42ce4b68a39d745104396b3ea48d80d8" name="a42ce4b68a39d745104396b3ea48d80d8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateFiles</b> () const</td></tr>
-<tr class="memdesc:a42ce4b68a39d745104396b3ea48d80d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">update size and checksum of all files <br /></td></tr>
-<tr class="separator:a42ce4b68a39d745104396b3ea48d80d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a132864077eb8f5491b30d406832c2991"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_files_container.html#a132864077eb8f5491b30d406832c2991">integrityCheck</a> (ull &amp;size) const</td></tr>
+<tr class="memdesc:a132864077eb8f5491b30d406832c2991"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if any of files is corrupted while setting size and checksum  <a href="class_files_container.html#a132864077eb8f5491b30d406832c2991">More...</a><br /></td></tr>
+<tr class="separator:a132864077eb8f5491b30d406832c2991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac397f55b7817e4298de66a96d71f2517"><td class="memItemLeft" align="right" valign="top"><a id="ac397f55b7817e4298de66a96d71f2517" name="ac397f55b7817e4298de66a96d71f2517"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateFiles</b> (ull &amp;size)</td></tr>
+<tr class="memdesc:ac397f55b7817e4298de66a96d71f2517"><td class="mdescLeft">&#160;</td><td class="mdescRight">update size and checksum of all files <br /></td></tr>
+<tr class="separator:ac397f55b7817e4298de66a96d71f2517"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6df5034bf2e6db4b2822d9ead6981ece"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_files_container.html#a6df5034bf2e6db4b2822d9ead6981ece">save</a> (std::ofstream &amp;rootFile) const</td></tr>
 <tr class="memdesc:a6df5034bf2e6db4b2822d9ead6981ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">save all files onto file through stream  <a href="class_files_container.html#a6df5034bf2e6db4b2822d9ead6981ece">More...</a><br /></td></tr>
 <tr class="separator:a6df5034bf2e6db4b2822d9ead6981ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -465,6 +464,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>updateFiles</b> () co
     <tr><td class="paramname">file</td><td>file name of target destination </td></tr>
     <tr><td class="paramname">chunkSize</td><td>max chunk size </td></tr>
     <tr><td class="paramname">size</td><td>size to be updated after successful import </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a132864077eb8f5491b30d406832c2991" name="a132864077eb8f5491b30d406832c2991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a132864077eb8f5491b30d406832c2991">&#9670;&nbsp;</a></span>integrityCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FilesContainer::integrityCheck </td>
+          <td>(</td>
+          <td class="paramtype">ull &amp;&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>check if any of files is corrupted while setting size and checksum </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td><br  />
+ </td></tr>
   </table>
   </dd>
 </dl>

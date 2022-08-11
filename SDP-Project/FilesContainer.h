@@ -26,6 +26,10 @@ class FilesContainer {
 	/// @return found chunk
 	Chunk* findOtherChunk(Chunk* current, const string& content) const;
 
+	/// @brief check if operation will overflow file system capacity
+	/// @param size current size
+	/// @param capacity capacity
+	/// @param contentSize size to be added
 	void capacityCheck(const ull size, const ull capacity, const ull contentSize) const;
 public:
 	~FilesContainer();
@@ -41,11 +45,12 @@ public:
 	/// @brief link all chunks to the corresponding source chunk
 	void link();
 
-	/// @brief calculate anew all files checksums
-	void calcChecksums() const;
+	/// @brief check if any of files is corrupted while setting size and checksum
+	/// @param size 
+	void integrityCheck(ull& size) const;
 
 	/// @brief update size and checksum of all files
-	void updateFiles() const;
+	void updateFiles(ull& size);
 
 	/// @brief save all files onto file through stream
 	/// @param rootFile stream to file

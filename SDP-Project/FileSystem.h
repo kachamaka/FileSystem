@@ -13,8 +13,6 @@ class FileSystem {
 	const int chunkSize = 10;
 
 	FilesContainer filesContainer;
-
-	void capacityCheck(const string& content);
 public:
 	FileSystem(string fileName, string rootDir, ull cap, ull size, int chSize, int lastChIndex);
 
@@ -29,7 +27,7 @@ public:
 		std::istream& file);
 
 	/// @brief save file system data
-	void save() const;
+	void save();
 
 	/// @brief print all files and directories in specified path directory
 	/// @param path path

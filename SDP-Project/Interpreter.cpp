@@ -1,9 +1,5 @@
 #include "Interpreter.h"
 
-Interpreter::Interpreter() : api() {
-	start();
-}
-
 Interpreter::Interpreter(const string& fileName) : api(fileName) {
 	start();
 }
@@ -91,7 +87,6 @@ void Interpreter::parse(const string& line) {
 					continue;
 				}
 				else {
-					//line[i] is " or letter
 					if (line[i] == '\"') {
 						//after exiting quotes iteration
 						argEnd = i;

@@ -7,15 +7,17 @@ class API {
 	FileSystem* fs = nullptr;
 
 public:
-	API() {
-		string root = "root.bin";
-		string rootDir = "root";
-		fs = new FileSystem(root, rootDir, INT_MAX, 0, 512, 0);
-	}
-
 	API(const string& fileName) {
 		std::ifstream infile(fileName);
-		if (!infile) throw std::exception("No such file...\n");
+		if (!infile) {
+			if (fileName == "root.bin") {
+				string root = "root.bin";
+				string rootDir = "root";
+				fs = new FileSystem(root, rootDir, INT_MAX, 0, 512, 0);
+				return;
+			}
+			throw std::exception("No such file...\n");
+		}
 
 		ull cap = 0, size = 0;
 		int chSize = 0, lastChIndex = 0;

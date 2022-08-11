@@ -40,7 +40,7 @@ FileSystem::FileSystem(
 		//get file size
 		std::getline(file, line);
 		std::getline(file, line);
-		f->setSize(stoull(line));
+		//f->setSize(stoull(line));
 
 		//get checksum
 		std::getline(file, line);
@@ -77,14 +77,16 @@ FileSystem::FileSystem(
 	}
 	filesContainer.link();
 
-	filesContainer.calcChecksums();
+	filesContainer.integrityCheck(size);
+
+	filesContainer.updateFiles(size);
 }
 
-void FileSystem::save() const {
+void FileSystem::save() {
 	std::ofstream outfile(rootFile);
 	if (!outfile) throw fileNotFound;
 
-	filesContainer.updateFiles();
+	filesContainer.updateFiles(size);
 
 	//save all info onto file
 	outfile << "Root:\n";
