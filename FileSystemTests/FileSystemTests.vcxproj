@@ -18,11 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\SDP-Project\Chunk.cpp" />
+    <ClCompile Include="..\SDP-Project\File.cpp" />
+    <ClCompile Include="..\SDP-Project\FilesContainer.cpp" />
+    <ClCompile Include="..\SDP-Project\FileSystem.cpp" />
+    <ClCompile Include="..\SDP-Project\Helper.cpp" />
+    <ClCompile Include="..\SDP-Project\Hierarchy.cpp" />
+    <ClCompile Include="FileSystemTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\SDP-Project\catch.hpp" />
+    <ClInclude Include="..\SDP-Project\Chunk.h" />
+    <ClInclude Include="..\SDP-Project\File.h" />
+    <ClInclude Include="..\SDP-Project\FilesContainer.h" />
+    <ClInclude Include="..\SDP-Project\FileSystem.h" />
+    <ClInclude Include="..\SDP-Project\Helper.h" />
+    <ClInclude Include="..\SDP-Project\Hierarchy.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{33c83885-05a8-4f45-86d7-a211c7fe9f02}</ProjectGuid>
-    <RootNamespace>HierarchyTests</RootNamespace>
+    <ProjectGuid>{8847236b-f85b-4523-92e5-9b40eeafa21b}</ProjectGuid>
+    <RootNamespace>FileSystemTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,6 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,20 +158,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\SDP-Project\Chunk.cpp" />
-    <ClCompile Include="..\SDP-Project\File.cpp" />
-    <ClCompile Include="..\SDP-Project\Helper.cpp" />
-    <ClCompile Include="..\SDP-Project\Hierarchy.cpp" />
-    <ClCompile Include="HierarchyTests.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\SDP-Project\catch.hpp" />
-    <ClInclude Include="..\SDP-Project\Chunk.h" />
-    <ClInclude Include="..\SDP-Project\File.h" />
-    <ClInclude Include="..\SDP-Project\Helper.h" />
-    <ClInclude Include="..\SDP-Project\Hierarchy.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

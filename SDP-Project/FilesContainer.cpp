@@ -11,6 +11,10 @@ FilesContainer::~FilesContainer() {
 	}
 }
 
+void FilesContainer::capacityCheck(const ull size, const ull capacity, const ull contentSize) const {
+	if (size + contentSize > capacity) throw notEnoughSpace;
+}
+
 void FilesContainer::add(File* f) {
 	files.push_back(f);
 }
@@ -77,7 +81,10 @@ void FilesContainer::cat(const vector<string>& path, const string& fileName) con
 	f->print();
 }
 
-void FilesContainer::write(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) {
+void FilesContainer::write(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity) {
+	capacityCheck(size, capacity, content.size());
+	if (fileName.empty()) throw std::exception("File name cannot be empty...");
+
 	File* f = Hierarchy::Get().getFile(path, fileName);
 	if (!f) {
 		Node* hierarchyFile = Hierarchy::Get().mkfile(path, fileName);
@@ -139,12 +146,13 @@ void FilesContainer::write(const vector<string>& path, const string& fileName, c
 			else chunk->content = chunkContent;
 			chunks.push_back(chunk);
 		}
-		catch (...) {
+		catch (const std::exception& e) {
 			for (auto it = chunks.begin(); it != chunks.end();) {
 				delete* it;
 				it = chunks.erase(it);
 			}
-			throw;
+			cout << e.what() << "???\n";
+			throw e;
 		}
 
 		f->deleteFileContents();
@@ -157,7 +165,7 @@ void FilesContainer::write(const vector<string>& path, const string& fileName, c
 	size += contentSize;
 }
 
-void FilesContainer::importFile(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) {
+void FilesContainer::importFile(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity) {
 	std::ifstream input(src);
 	if (!input) throw std::exception("No such source file...");
 
@@ -168,10 +176,12 @@ void FilesContainer::importFile(const string& src, const vector<string>& dir, co
 	string line;
 	while (std::getline(input, line)) content += line;
 
-	write(dir, file, content, chunkSize, size);
+	write(dir, file, content, chunkSize, lastChunkIndex, size, capacity);
 }
 
-void FilesContainer::writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) const {
+void FilesContainer::writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity) const {
+	capacityCheck(size, capacity, content.size());
+
 	File* f = Hierarchy::Get().getFile(path, fileName);
 	if (!f) throw fileNotFound;
 
@@ -244,7 +254,7 @@ void FilesContainer::writeAppend(const vector<string>& path, const string& fileN
 	size += content.size();
 }
 
-void FilesContainer::importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) const {
+void FilesContainer::importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity) const {
 	std::ifstream input(src);
 	if (!input) throw std::exception("No such source file...");
 
@@ -255,7 +265,7 @@ void FilesContainer::importAppend(const string& src, const vector<string>& dir, 
 	string line;
 	while (std::getline(input, line)) content += line;
 
-	writeAppend(dir, file, content, chunkSize, size);
+	writeAppend(dir, file, content, chunkSize, lastChunkIndex, size, capacity);
 }
 
 void FilesContainer::exportFile(const vector<string>& src, const string& file, const string& dest) {
@@ -273,10 +283,12 @@ void FilesContainer::exportFile(const vector<string>& src, const string& file, c
 }
 
 
-void FilesContainer::cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName, ull& size) {
+void FilesContainer::cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName, ull& lastChunkIndex, ull& size, const ull capacity) {
 	File* src = Hierarchy::Get().getFile(srcPath, srcName);
 	if (!src) throw std::exception("Couldn't find source file...");
 	src->checkChecksum();
+
+	capacityCheck(size, capacity, src->getSize());
 
 	File* dest = Hierarchy::Get().getFile(destPath, destName);
 	if (dest) throw std::exception("Destination file already exists...");
@@ -285,7 +297,7 @@ void FilesContainer::cp(const vector<string>& srcPath, const string& srcName, co
 	if (!parentNode) throw std::exception("No such destination path...");
 
 
-	dest = src->cp();
+	dest = src->cp(lastChunkIndex);
 	dest->setName(destName);
 
 	try {

@@ -129,7 +129,7 @@ Node* Hierarchy::goToDir(const vector<string>& path) {
 	Node* dir = currentDirectory;
 	size_t i = 0;
 
-	if (toLower(path[0]) == ":" + toLower(root->name)) {
+	if (toLower(path[0]) == ":" + toLower(root->name) || path[0] == "~") {
 		dir = root;
 		++i;
 	}

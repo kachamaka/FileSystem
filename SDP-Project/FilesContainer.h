@@ -4,7 +4,10 @@
 #include "Hierarchy.h"
 
 #define fileNotFound \
-std::exception("Couldn't find file");
+std::exception("Couldn't find file...");
+
+#define notEnoughSpace \
+std::exception("Not enough space...");
 
 /// @brief structure for containing all files
 class FilesContainer {
@@ -22,6 +25,8 @@ class FilesContainer {
 	/// @param content chunk content
 	/// @return found chunk
 	Chunk* findOtherChunk(Chunk* current, const string& content) const;
+
+	void capacityCheck(const ull size, const ull capacity, const ull contentSize) const;
 public:
 	~FilesContainer();
 
@@ -57,7 +62,7 @@ public:
 	/// @param content file content to be written/overwritten
 	/// @param chunkSize max chunk size
 	/// @param size size to be updated after operation
-	void write(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size);
+	void write(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity);
 	
 	/// @brief import file from windows file system into current
 	/// @param src path to file in windows file system
@@ -65,7 +70,7 @@ public:
 	/// @param file file name of target destination
 	/// @param chunkSize max chunk size
 	/// @param size size to be updated after successful import
-	void importFile(const string& src, const vector<string>& dest, const string& file, const int chunkSize, ull& size);
+	void importFile(const string& src, const vector<string>& dest, const string& file, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity);
 
 	/// @brief append content to end of file
 	/// @param path file directory
@@ -73,7 +78,7 @@ public:
 	/// @param content content to be appended
 	/// @param chunkSize max chunk size
 	/// @param size size to be updated after operation
-	void writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& size) const;
+	void writeAppend(const vector<string>& path, const string& fileName, const string& content, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity) const;
 
 	/// @brief import file from windows file system while appending it to existing destination file
 	/// @param src path to file in windows file system
@@ -81,7 +86,7 @@ public:
 	/// @param file file name of target destination
 	/// @param chunkSize max chunk size
 	/// @param size size to be updated after successful import with append
-	void importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& size) const;
+	void importAppend(const string& src, const vector<string>& dir, const string& file, const int chunkSize, ull& lastChunkIndex, ull& size, const ull capacity) const;
 
 	/// @brief export file from current file system into windows file system for example
 	/// @param src path to directory in current file system
@@ -95,7 +100,7 @@ public:
 	/// @param destPath destination file directory
 	/// @param destName destination file name
 	/// @param size size to be updated after operation
-	void cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName, ull& size);
+	void cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName, ull& lastChunkIndex, ull& size, const ull capacity);
 
 	/// @brief print file info
 	/// @param fPath path to file

@@ -169,9 +169,8 @@ void File::save(std::ofstream& rootFile) const {
 	rootFile << '\n';
 }
 
-File* File::cp() {
+File* File::cp(ull& lastChunkIndex) {
 	File* f = new File();
-	f->size = size;
 	f->checksum = checksum;
 	try {
 		for (auto it = chunks.begin(); it != chunks.end(); ++it) {

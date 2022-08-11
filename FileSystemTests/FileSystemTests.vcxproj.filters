@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\SDP-Project\Chunk.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\File.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\FilesContainer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\FileSystem.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\Helper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\Hierarchy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystemTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\SDP-Project\catch.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\Chunk.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\File.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\FilesContainer.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\FileSystem.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\Helper.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\Hierarchy.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{dc867864-3516-4ce2-ac9f-27aee434a870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{98d72aa4-58cb-4ac1-b0e4-6aa73f945f42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

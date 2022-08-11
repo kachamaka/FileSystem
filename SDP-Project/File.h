@@ -7,8 +7,6 @@
 #define split(arg) Helper::split(arg)
 #define pathToString(arg) Helper::pathToString(arg)
 
-static int lastChunkIndex = 0;
-
 /// @brief nodes for the tree structure
 struct Node {
 	string name;
@@ -105,7 +103,7 @@ public:
 	void save(std::ofstream& rootFile) const;
 
 	/// @brief copy command returning a copy of current file
-	File* cp();
+	File* cp(ull& lastChunkIndex);
 
 	/// @brief print file info
 	void print() const;

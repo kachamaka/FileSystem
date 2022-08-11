@@ -1,18 +1,11 @@
 #define CATCH_CONFIG_MAIN
 
-#include "../FS/catch.hpp"
-#include "../FS/Hierarchy.h"
+#include "../SDP-Project/catch.hpp"
+#include "../SDP-Project/Hierarchy.h"
 
 TEST_CASE("Empty tree") {
 	Hierarchy h;
 	REQUIRE(h.empty());
-
-	//SECTION("Sizes are reported correctly")	{
-	//	REQUIRE(1);
-	//	REQUIRE(1);
-	//	REQUIRE(1);
-	//}
-
 }
 
 SCENARIO("Add to hierarchy") {
@@ -49,11 +42,18 @@ SCENARIO("Add to hierarchy") {
 	h.mkfile(searchPath, fname);
 	File* f = h.getFile(searchPath, fname);
 	REQUIRE(f == nullptr);
-	searchPath.push_back(fname);
+	//searchPath.push_back(fname);
 	node = h.getNode(searchPath);
+	for (auto it = node->children.begin(); it != node->children.end(); ++it) {
+		if ((*it)->name == fname) {
+			node = *it;
+			break;
+		}
+	}
 	REQUIRE(node->name == fname);
 	REQUIRE(node->path == originalPath);
 
 	string print = "Root/dirD\nRoot/file1.txtF\nRoot/dir2/dir3/dir4/file.txtF\nRoot/dir2/testDir/myFile.txtF\n";
 	REQUIRE(h.print() == print);
+
 }

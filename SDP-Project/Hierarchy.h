@@ -1,8 +1,6 @@
 #pragma once
 
 #include "File.h"
-#include <format>
-
 
 #define invalidHierarchyPath \
 std::exception("Invalid path in hierarchy");
@@ -36,8 +34,6 @@ std::exception("Invalid path in getFile");
 
 #define invalidLinkNodesPath \
 std::exception("Invalid path in linking node-file pointers");
-
-
 
 
 /// @brief class for organising file system relations - directories and files
@@ -81,7 +77,6 @@ class Hierarchy {
 	/// @param paths paths to store result onto
 	void getLeaves(Node* current, vector<vector<string>>& paths) const;
 
-	bool empty() const;
 public:
 	Hierarchy() {}
 
@@ -95,6 +90,15 @@ public:
 
 	~Hierarchy() {
 		clearHierarchy(root);
+	}
+	
+	bool empty() const;
+
+	void clear() {
+		clearHierarchy(root);
+		root = nullptr;
+		currentDirectory = nullptr;
+		maxDepth = 0;
 	}
 
 	/// @brief an array of tree leaves to be parsed and inserted into the tree

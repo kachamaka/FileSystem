@@ -1,9 +1,5 @@
 #include "FileSystem.h"
 
-void FileSystem::capacityCheck(const string& content) {
-	if (size + content.size() > capacity) throw notEnoughSpace;
-}
-
 FileSystem::FileSystem(string fileName, string rootDir, ull cap, ull size, int chSize, int lastChIndex)
 	: rootFile(fileName), root(rootDir), capacity(cap), size(size), chunkSize(chSize) {
 	vector<vector<string>> paths;
@@ -132,19 +128,19 @@ void FileSystem::cat(const vector<string>& path, const string& file) const {
 }
 
 void FileSystem::write(const vector<string>& path, const string& file, const string& content) {
-	filesContainer.write(path, file, content, chunkSize, size);
+	filesContainer.write(path, file, content, chunkSize, lastChunkIndex, size, capacity);
 }
 
 void FileSystem::importFile(const string& src, const vector<string>& dest, const string& file) {
-	filesContainer.importFile(src, dest, file, chunkSize, size);
+	filesContainer.importFile(src, dest, file, chunkSize, lastChunkIndex, size, capacity);
 }
 
 void FileSystem::writeAppend(const vector<string>& path, const string& file, const string& content) {
-	filesContainer.writeAppend(path, file, content, chunkSize, size);
+	filesContainer.writeAppend(path, file, content, chunkSize, lastChunkIndex, size, capacity);
 }
 
 void FileSystem::importAppend(const string& src, const vector<string>& dest, const string& file) {
-	filesContainer.importAppend(src, dest, file, chunkSize, size);
+	filesContainer.importAppend(src, dest, file, chunkSize, lastChunkIndex, size, capacity);
 }
 
 void FileSystem::exportFile(const vector<string>& src, const string& file, const string& dest) {
@@ -152,5 +148,5 @@ void FileSystem::exportFile(const vector<string>& src, const string& file, const
 }
 
 void FileSystem::cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName) {
-	filesContainer.cp(srcPath, srcName, destPath, destName, size);
+	filesContainer.cp(srcPath, srcName, destPath, destName, lastChunkIndex, size, capacity);
 }

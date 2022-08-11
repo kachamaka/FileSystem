@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\SDP-Project\Chunk.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\File.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\Helper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SDP-Project\Hierarchy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HierarchyTests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\SDP-Project\catch.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\Chunk.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\File.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\Helper.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDP-Project\Hierarchy.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{4010b1e2-4b7d-4625-bb79-56d32daa5c76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{5344290c-e29f-4de2-8e7e-d1cff32060ad}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -3,14 +3,12 @@
 #include "Hierarchy.h"
 #include "FilesContainer.h"
 
-#define notEnoughSpace \
-std::exception("Not enough space...");
-
 /// @brief structure storing all file system info + files
 class FileSystem {
 	string rootFile = "";
 	string root = "/";
 	ull size = 0;
+	ull lastChunkIndex = 0;
 	const ull capacity = 0;
 	const int chunkSize = 10;
 
