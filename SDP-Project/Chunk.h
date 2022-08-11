@@ -34,8 +34,15 @@ struct Chunk {
 	/// @return checksum
 	unsigned long calcChecksum() const;
 
-	void save(std::ofstream& rootFile) const;
+	/// @brief write chunk to file
+	/// @param rootFile output file stream
+	void save(std::ofstream& output) const;
+
+	/// @brief print chunk contents
 	void print() const;
+
+	/// @brief get chunk size
+	/// @return chunk size
 	size_t size() const;
 
 	/// @brief get chunk content

@@ -19,6 +19,7 @@ enum Type {
 	file
 };
 
+/// @brief structure with functions used by several classes
 struct Helper {
 
 	/// @brief combine path into string
@@ -37,10 +38,3 @@ struct Helper {
 	/// @return new string with all lower characters
 	static string toLower(const string& s);
 };
-
-//std::ostream& operator<<(std::ostream& os, const vector<string>& v) {
-//	for (size_t i = 0; i < v.size(); i++) {
-//		os << v[i] << (i == v.size() - 1 ? '\0' : '/');
-//	}
-//	return os;
-//}

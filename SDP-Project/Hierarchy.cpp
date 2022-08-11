@@ -165,6 +165,10 @@ void Hierarchy::mkdir(const vector<string>& path, const string& mkDir) {
 	Node* dir = goToDir(path);
 	if (!dir) throw invalidMkDirPath;
 
+	for (auto d = dir->children.begin(); d != dir->children.end(); ++d) {
+		if ((*d)->name == mkDir) throw std::exception("Directory already exists...");
+	}
+
 	Node* newDir = new Node(mkDir, Type::directory, dir->depth + 1, dir);
 	vector<string> p = dir->path;
 	p.push_back(mkDir);
@@ -177,17 +181,21 @@ void Hierarchy::rmdir(const vector<string>& path, const string& rmDir) {
 	if (!dir) throw invalidRmDirPath;
 
 	list<Node*>& children = dir->children;
+	
+	bool found = false;
 	for (auto it = children.begin(); it != children.end(); ++it) {
 		Node* rmNode = *it;
 		if (rmNode->name == rmDir && rmNode->type == Type::directory) {
 			if (!rmNode->children.size()) {
 				children.erase(it);
 				delete rmNode;
+				found = true;
 				break;
 			}
 			else throw folderNotEmpty;
 		}
 	}
+	if (!found) throw std::exception("Directory not found...");
 }
 
 void Hierarchy::ls(const vector<string>& path) {

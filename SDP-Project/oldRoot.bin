@@ -3,11 +3,11 @@ Root
 Capacity:
 524288000
 Size:
-55
+75
 ChunkSize:
 10
 LastChunkIndex:
-35
+37
 Hierarchy:
 Root/file1.txtF
 Root/file2.txtF
@@ -16,6 +16,7 @@ Root/folder1/file3.txtF
 Root/folder2D
 Root/folder3/folder4/file1.txtF
 Root/myF
+Root/newFF
 
 Files:
 Root/file1.txt:
@@ -81,4 +82,13 @@ Checksum:
 Contents:
 Chunk33:Chunk4
 Chunk35:Chunk5
+
+Root/newF:
+Size:
+20
+Checksum:
+1968
+Contents:
+Chunk36:Chunk9
+Chunk37:Chunk10
 

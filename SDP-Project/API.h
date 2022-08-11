@@ -2,7 +2,7 @@
 
 #include "FileSystem.h"
 
-/// @brief api to communicate with file system
+/// @brief API to communicate with file system
 class API {
 	FileSystem* fs = nullptr;
 
@@ -63,60 +63,104 @@ public:
 		delete fs;
 	}
 
+	/// @brief ls function for printing files and directories in directory with specified path
+	/// @param path path
 	void ls(const vector<string>& path) const {
 		fs->ls(path);
 	}
 
+	/// @brief ls function for current directory
 	void ls() const {
 		vector<string> path = { "." };
 		fs->ls(path);
 	}
 
+	/// @brief save file system information
 	void save() const {
 		fs->save();
 	}
 
+	/// @brief change current directory
+	/// @param path path
 	void cd(const vector<string>& path) const {
 		fs->cd(path);
 	}
 
+	/// @brief remove file
+	/// @param path path
+	/// @param file file name
 	void rm(const vector<string>& path, const string& file) {
 		fs->rm(path, file);
 	}
 
-	void cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName) {
-		fs->cp(srcPath, srcName, destPath, destName);
-	}
-
-	void cat(const vector<string>& path, const string& file) const {
-		fs->cat(path, file);
-	}
-
-	void write(const vector<string>& path, const string& file, const string& content) {
-		fs->write(path, file, content);
-	}
-
-	void importFile(const string& src, const vector<string>& dest, const string& file) {
-		fs->importFile(src, dest, file);
-	}
-
-	void writeAppend(const vector<string>& path, const string& file, const string& content) const {
-		fs->writeAppend(path, file, content);
-	}
-
-	void importAppend(const string& src, const vector<string>& dest, const string& file) {
-		fs->importAppend(src, dest, file);
-	} 
-
-	void exportFile(const vector<string>& src, const string& file, const string& dest) {
-		fs->exportFile(src, file, dest);
-	}
-
+	/// @brief make directory
+	/// @param path path to directory
+	/// @param dir new directory name
 	void mkdir(const vector<string>& path, const string& dir) const {
 		fs->mkdir(path, dir);
 	}
 
+	/// @brief remove directory
+	/// @param path path to directory
+	/// @param dir directory name to be removed
 	void rmdir(const vector<string>& path, const string& dir) const {
 		fs->rmdir(path, dir);
 	}
+
+	/// @brief copy file
+	/// @param srcPath src path to directory
+	/// @param srcName src file name
+	/// @param destPath dest path to directory
+	/// @param destName dest file name
+	void cp(const vector<string>& srcPath, const string& srcName, const vector<string>& destPath, const string& destName) {
+		fs->cp(srcPath, srcName, destPath, destName);
+	}
+
+	/// @brief print file content
+	/// @param path path
+	/// @param file file name
+	void cat(const vector<string>& path, const string& file) const {
+		fs->cat(path, file);
+	}
+
+	/// @brief write content to file
+	/// @param path path
+	/// @param file file name
+	/// @param content content
+	void write(const vector<string>& path, const string& file, const string& content) {
+		fs->write(path, file, content);
+	}
+
+	/// @brief import file from outer file system
+	/// @param src src file path
+	/// @param dest dest dir path
+	/// @param file dest file name
+	void importFile(const string& src, const vector<string>& dest, const string& file) {
+		fs->importFile(src, dest, file);
+	}
+
+	/// @brief write with append
+	/// @param path path
+	/// @param file file name
+	/// @param content content
+	void writeAppend(const vector<string>& path, const string& file, const string& content) const {
+		fs->writeAppend(path, file, content);
+	}
+
+	/// @brief import with append
+	/// @param src src file path
+	/// @param dest dest dir path
+	/// @param file dest file name
+	void importAppend(const string& src, const vector<string>& dest, const string& file) {
+		fs->importAppend(src, dest, file);
+	} 
+
+	/// @brief export file to outer file system
+	/// @param src src file path
+	/// @param file src file name
+	/// @param dest dest file path
+	void exportFile(const vector<string>& src, const string& file, const string& dest) {
+		fs->exportFile(src, file, dest);
+	}
+
 };

@@ -92,8 +92,11 @@ public:
 		clearHierarchy(root);
 	}
 	
+	/// @brief checks if hierarchy is empty
+	/// @return if hierarchy is empty
 	bool empty() const;
 
+	/// @brief clear hierarchy
 	void clear() {
 		clearHierarchy(root);
 		root = nullptr;
@@ -109,6 +112,8 @@ public:
 	/// @brief get path of current directory
 	/// @return current directory
 	string getCurrentDirectory();
+
+	/// @brief print current directory path
 	void curDir();
 	
 	/// @brief navigate to directory along the path 

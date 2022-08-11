@@ -9,7 +9,7 @@ std::exception("Couldn't find file...");
 #define notEnoughSpace \
 std::exception("Not enough space...");
 
-/// @brief structure for containing all files
+/// @brief class for containing all files
 class FilesContainer {
 	list<File*> files;
 
@@ -30,7 +30,12 @@ class FilesContainer {
 public:
 	~FilesContainer();
 
+	/// @brief add file to files list
+	/// @param f file
 	void add(File* f);
+
+	/// @brief add chunk for it to be linked to possible source chunk later
+	/// @param c chunk
 	void addLink(Chunk* c);
 
 	/// @brief link all chunks to the corresponding source chunk
@@ -39,6 +44,7 @@ public:
 	/// @brief calculate anew all files checksums
 	void calcChecksums() const;
 
+	/// @brief update size and checksum of all files
 	void updateFiles() const;
 
 	/// @brief save all files onto file through stream

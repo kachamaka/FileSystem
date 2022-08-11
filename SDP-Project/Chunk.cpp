@@ -65,10 +65,10 @@ unsigned long Chunk::calcChecksum() const {
 	return calcStringChecksum(source->content);
 }
 
-void Chunk::save(std::ofstream& rootFile) const {
-	rootFile << name.c_str() << ':';
-	if (source) rootFile << source->name << '\n';
-	else rootFile << '\n' << content << '\n';
+void Chunk::save(std::ofstream& output) const {
+	output << name.c_str() << ':';
+	if (source) output << source->name << '\n';
+	else output << '\n' << content << '\n';
 }
 
 size_t Chunk::size() const {

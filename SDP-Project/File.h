@@ -51,7 +51,7 @@ class File {
 	/// @brief function for redirecting the source of chunks in file 
 	/// in order for them to be deleted without issues later
 	/// note: making as much chunks in the file as possible a reference instead of source
-	void prepareRM();
+	void swapChunks(Chunk* chunk, Chunk* reference = nullptr);
 
 	/// @brief calculate file checksum and return it
 	unsigned long calcChecksum() const;
@@ -64,11 +64,27 @@ public:
 	/// @brief delete all chunks in the file
 	void deleteFileContents();
 
+	/// @brief file hierarchy node according to the hierarchy
+	/// @param n new node
 	void setNode(Node* n);
+
+	/// @brief set file size
+	/// @param size new size
 	void setSize(ull size);
+
+	/// @brief set checksum by calculating it
 	void setChecksum();
+
+	/// @brief set new checksum
+	/// @param chksm new checksum
 	void setChecksum(unsigned long chksm);
+
+	/// @brief set new name
+	/// @param name new name
 	void setName(const string& name);
+
+	/// @brief set path
+	/// @param path new path
 	void setPath(const vector<string>& path);
 	
 	/// @brief set chunks with new list of chunks
@@ -81,21 +97,33 @@ public:
 	
 	//get the corresponding node of the file in the tree structure
 	Node* getNode() const;
+
+	/// @brief get size
+	/// @return size
 	ull getSize() const;
 
 	/// @brief get file contents
 	/// @return file contents
 	string getContent() const;
-
+	
+	/// @brief gets file path
+	/// @return file path
 	const vector<string>& getPath() const;
+
+	/// @brief get file chunks
+	/// @return file chunks
 	const list<Chunk*>& getChunks() const;
 
+	/// @brief remove last chunk
 	void removeLastChunk();
 
 	//add chunk to the end of the file
 	void appendChunk(Chunk* chunk);
 
+	/// @brief update file size and checksum
 	void updateSizeAndChecksum();
+
+	/// @brief check is file checksum is correct
 	void checkChecksum();
 
 	/// @brief save file info through the stream
